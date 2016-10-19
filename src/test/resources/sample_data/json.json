@@ -1,0 +1,22 @@
+{ 
+"orderID": "B00009013", "orderDate": "2016-03-15", "customerPO": "abc123", "requestedDeliveryDate": "2016-03-16", "paymentMode": "invoice", "orderCurrency": "EUR",
+"partners": [
+{
+"role": "SoldTo", "parterNumber": "10001", "partnerName": "John Smith", "address": "50987 Park Ln, Mokena, IL"
+},
+{
+"role": "ShipTo", "parterNumber": "10001", "partnerName": "John Smith", "address": "50987 Park Ln, Mokena, IL"
+}
+],
+"orderItems": [
+{
+"lineNumber": 1, "articleNumber": "9400034", "articleName": "Pizza margherita", "orderQuantity": 5, "orderUOM": "PC", "unitPrice": 4.98	
+},
+{
+"lineNumber": 2, "articleNumber": "9400029", "articleName": "Lavazza Coffee", "orderQuantity": 2, "orderUOM": "PC", "unitPrice": 6.99	
+},
+{
+"lineNumber": 3, "articleNumber": "9400040", "articleName": "Chocolate Chip Cookies", "orderQuantity": 7,  "orderUOM": "PC", "unitPrice": 2.49	
+}
+]
+}

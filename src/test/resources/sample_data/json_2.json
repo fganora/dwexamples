@@ -1,0 +1,26 @@
+{
+  "orderID": "10001",
+  "orderDate": "????",
+  "customerPO": "????",
+  "requestedDeliveryDate": "????",
+  "paymentMode": "????",
+  "orderCurrency": "????",
+  "partners": [
+    {
+      "role": "????",
+      "parterNumber": "????",
+      "partnerName": "????",
+      "address": "????"
+    }
+  ],
+  "orderItems": [
+    {
+      "lineNumber": 1,
+      "articleNumber": "????",
+      "articleName": "????",
+      "orderQuantity": 1,
+      "orderUOM": "????",
+      "unitPrice": 2
+    }
+  ]
+}

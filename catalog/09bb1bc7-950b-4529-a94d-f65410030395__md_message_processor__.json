@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "BreakfastMenu"
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "09bb1bc7-950b-4529-a94d-f65410030395",
+    "version": "5.2.0.0"
+}

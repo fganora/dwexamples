@@ -1,0 +1,43 @@
+[{
+    "Name": "Mr White",
+    "Email": "white@mulesoft.com",
+    "Id": "1234",
+    "Title": "Chief Java Prophet"
+},
+{
+    "Name": "Mr Orange",
+    "Email": "orange@mulesoft.com",
+    "Id": "4567",
+    "Title": "Integration Ninja"
+},
+{
+    "Name": "Mr Pink",
+    "Email": "pink@mulesoft.com",
+    "Id": "8923",
+    "Title": "Integration Ninja"
+},
+{
+    "Name": "Mr Kunde",
+    "Email": "kunde@mulesoft.com",
+    "Id": "4500",
+    "Title": "Account Manager"
+},
+{
+    "Name": "Mr Blue",
+    "Email": "blue@mulesoft.com",
+    "Id": "8923",
+    "Title": "Executive Growth Rockstar Embassador"
+},
+{
+    "Name": "Mr Funk",
+    "Email": "funk@mulesoft.com",
+    "Id": "9920",
+    "Title": "Integration Ninja"
+},
+{
+    "Name": "Mr Care",
+    "Email": "care@mulesoft.com",
+    "Id": "2501",
+    "Title": "Account Manager"
+}
+]

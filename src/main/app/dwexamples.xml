@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:context="http://www.springframework.org/schema/context"  xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <http:request-config name="HTTP_Request_Configuration" host="www.telhill.com" port="80" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="t-shirt.raml"/>
+    </http:request-config>
+    <context:property-placeholder location="examples-${env}.properties"/>
+    <flow name="simpleMappingFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/simplemapping" doc:name="HTTP"/>
+        <set-variable variableName="subObj" value="#[[&quot;Foo&quot; : &quot;Bar&quot;, &quot;Bar&quot; : &quot;Foo&quot;]]" doc:name="Variable"/>
+        <set-session-variable variableName="nameArray" value="#[{&quot;Jim&quot;, &quot;Bob&quot;, &quot;Jane&quot;}]" doc:name="Session Variable"/>
+        <message-properties-transformer doc:name="Message Properties">
+            <add-message-property key="Pluto" value="#[java.util.UUID.randomUUID().toString()]"/>
+            <add-message-property key="Pippo" value="ABC"/>
+        </message-properties-transformer>
+        <set-property propertyName="#[message.inboundProperties.'http.query.params'.tsPropName]" value="#[now = new java.util.Date(); now.toString()]" doc:name="Property"/>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{ constant: "1",
+  uri: 	inboundProperties."http.request.uri",
+  a-queryParam: inboundProperties."http.query.params"['a'],
+  subObj: flowVars.subObj,
+  nameArray: sessionVars.nameArray,
+  out1: outboundProperties.Pippo,
+  out2: outboundProperties.Pluto,
+  timeStamp: outboundProperties.ts,
+  javaHome: p('java.home')
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="csvshipping">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/csvshipping" metadata:id="53b5e548-5736-4f83-bfde-a0e1e701b252" doc:name="HTTP"/>
+        <dw:transform-message metadata:id="baf711d6-e8fc-423a-b83d-9db52beb1387" doc:name="Transform Message">
+            <dw:input-payload doc:sample="sample_data/list_csv.csv">
+                <dw:reader-property name="separator" value=";"/>
+            </dw:input-payload>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload orderBy ($.City ++ $.DeliveryDate)
+		groupBy ($.City ++ ',' ++ $.DeliveryDate)
+	    pluck (
+	 	  {city: ($$ splitBy ",")[0],
+	 	  deliveryDate: ($$ splitBy ",")[1],		
+	 	  stops: ($ groupBy $.CustomerId)
+	 	  	pluck  (
+	 	  			{customer: $$,
+	 	  			orderitems: $ map ({
+	 	  				ordernr: $.OrderId,
+	 	  				orderdate: $.OrderDate,
+	 	  				product: $.ProductId,
+	 	  				qty: $.Quantity
+	 	  			}) 
+	 	    })
+	 })
+
+
+]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="cXMLOrder">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/cxml" metadata:id="e6ef6c51-cb91-4c4c-9033-b5e71d79a62b" doc:name="HTTP"/>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:input-payload doc:sample="/Users/francescoganora/data/muletests/cxml/OrderRequest.xml"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/dw
+---
+payload.OrderRequest.*ItemOut map {
+	order_nr: payload.OrderRequest.OrderRequestHeader.@orderID,
+	order_date: payload.OrderRequest.OrderRequestHeader.@orderDate,
+	sku: $.ItemID.SupplierPartID,
+	sku_description: $.ItemDetail.Description,
+	qty: $.@quantity
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="ordermapping">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/ordermapping" metadata:id="8d9a1c1a-e3a4-4db7-88ca-a41e21a1b739" doc:name="HTTP"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="283b6b94-d749-4326-a14a-2c3f06a8dc2d">
+            <dw:input-payload doc:sample="sample_data/json_2.json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+
+%output application/xml
+
+---
+{ 
+order:  {
+  ID: payload.orderID ++ " dated " ++ payload.orderDate,
+  nrLines: (sizeOf payload.orderItems) + 1,
+  totalOrderAmount: payload.*orderItems reduce $$ + (($.orderQuantity as :number) * ($.unitPrice as :number))
+  }
+ }]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="breakfastmenutransform">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/breakfastmenutransform" doc:name="HTTP"/>
+        <dw:transform-message metadata:id="09bb1bc7-950b-4529-a94d-f65410030395" doc:name="Transform Message">
+            <dw:input-payload doc:sample="sample_data/breakfast_menu_1.xml"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{piatti: payload.breakfast_menu.*food map {
+	nome: $.name,
+	prezzo: (($.price) replace "\$" with ""),
+	ciboRiccoDiCalorie: "si" when $.calories > 700 otherwise "no"
+	
+},
+totalCalories: payload.breakfast_menu.*food.calories 
+		reduce $$ + $
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="ex1">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/dw-ex1" doc:name="HTTP"/>
+        <dw:transform-message metadata:id="a4b35646-bb21-46ac-9458-cdb4c305304c" doc:name="Transform Message">
+            <dw:input-payload doc:sample="sample_data/list_json_1.json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+titles: payload groupBy $.Title]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="ex2">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/dw-ex2" doc:name="HTTP"/>
+        <dw:transform-message metadata:id="2a8b7d3d-d2c6-4830-b343-dd34ece0e1db" doc:name="Transform Message">
+            <dw:input-payload doc:sample="json_1.json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%function words(name) name splitBy " "
+---
+{order :{
+	type: "Book",
+	title: payload.title,
+	author: {firstName: words(payload.authors[0])[0],
+			lastName: words(payload.authors[0])[1]
+	},
+	issuedBy: "$(payload.publisher) ($(payload.year))"
+}
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="ex3">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/dw-ex3" doc:name="HTTP"/>
+        <logger message="#[dw(&quot;myobject:{user: payload.user, newcounter: payload.counter + 1}&quot;, &quot;application/xml&quot;)]" level="INFO" doc:name="Logger"/>
+        <dw:transform-message metadata:id="74ed687c-977e-41a1-8a5b-be1f4edbcfd8" doc:name="Transform Message">
+            <dw:input-inbound-property propertyName="http.query.string"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	requestdata: {
+		uri: inboundProperties."http.request.uri",
+		method: inboundProperties."http.method",
+		querystring: inboundProperties."http.query.string",
+		httpversion: inboundProperties."http.version",
+		javahome: p('java.home')
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="dwgrouping">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/dwgrouping" doc:name="HTTP"/>
+        <dw:transform-message metadata:id="86f6f34b-3918-431c-a3a7-48c2b1309839" doc:name="Transform Message">
+            <dw:input-payload doc:sample="/Users/francescoganora/Development/Mule37/WORKDATA/dwexamples_dwgrouping/input.json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/dw
+---
+payload.itemlist 
+groupBy ((item, index) -> item.category ++ '-' ++ item.priority) 
+  ]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="csvmultiformat">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/csvmultiformat" metadata:id="12b4d4ec-5401-4423-8dfc-b71e2f6ca782" doc:name="HTTP"/>
+        <dw:transform-message metadata:id="53d4805e-b43a-4c94-8aef-22d30e3d647d" doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{ p3-fld1: "Data",
+  p3-fld2: "Data",	
+  p3-fld3: "Data",
+  p3-fld4: "Data"
+}]]></dw:set-payload>
+            <dw:set-variable variableName="additionalData"><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	p3-fld1: 'Data',
+	p3-fld2: 'Data',
+	p3-fld3: 'Data',
+	p3-fld4: 'Data'
+}]]></dw:set-variable>
+        </dw:transform-message>
+        <dw:transform-message metadata:id="facdb6c6-d82d-4f04-8598-886d47359212" doc:name="Transform Message">
+            <dw:input-payload doc:sample="sample_data/json_3.json"/>
+            <dw:input-variable doc:sample="sample_data/additional_data_type_1.dwl" variableName="additionalData"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output text/csv separator=";", header=false
+---
+
+payload + {filler: "***",
+nRec: sizeOf payload,
+filler: "***"	
+}
+]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+</mule>

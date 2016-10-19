@@ -1,0 +1,230 @@
+<custom__type__definition>
+  <version>5.2.0.0</version>
+  <typeName class="org.mule.common.metadata.DefaultMetaDataKey">
+    <id>BreakfastMenu</id>
+    <displayName>BreakfastMenu</displayName>
+    <category>DEFAULT</category>
+    <metaDataKeyPropertiesManager>
+      <properties>
+        <org.mule.common.metadata.key.property.dsql.DsqlFromMetaDataKeyProperty/>
+      </properties>
+    </metaDataKeyPropertiesManager>
+  </typeName>
+  <metadataModel class="org.mule.common.metadata.DefaultXmlMetaDataModel">
+    <dataType>XML</dataType>
+    <metaDataModelPropertiesManager>
+      <properties>
+        <org.mule.common.metadata.property.TextBasedExampleMetaDataModelProperty/>
+        <org.mule.common.metadata.property.xml.SchemaTypeMetaDataProperty>
+          <typeQName>
+            <namespaceURI></namespaceURI>
+            <localPart>breakfast_menuType</localPart>
+            <prefix></prefix>
+          </typeQName>
+        </org.mule.common.metadata.property.xml.SchemaTypeMetaDataProperty>
+      </properties>
+    </metaDataModelPropertiesManager>
+    <fields>
+      <org.mule.common.metadata.DefaultMetaDataField>
+        <name>food</name>
+        <model class="org.mule.common.metadata.DefaultListMetaDataModel">
+          <dataType>LIST</dataType>
+          <metaDataModelPropertiesManager>
+            <properties>
+              <org.mule.common.metadata.property.xml.SchemaTypeMetaDataProperty>
+                <typeQName>
+                  <namespaceURI></namespaceURI>
+                  <localPart>foodType</localPart>
+                  <prefix></prefix>
+                </typeQName>
+              </org.mule.common.metadata.property.xml.SchemaTypeMetaDataProperty>
+              <org.mule.common.metadata.property.xml.UnboundMetaDataProperty>
+                <maxOccurs>2147483647</maxOccurs>
+                <minOccurs>0</minOccurs>
+              </org.mule.common.metadata.property.xml.UnboundMetaDataProperty>
+            </properties>
+          </metaDataModelPropertiesManager>
+          <model class="org.mule.common.metadata.DefaultXmlMetaDataModel">
+            <dataType>XML</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+            <fields>
+              <org.mule.common.metadata.DefaultMetaDataField>
+                <name>name</name>
+                <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+                  <dataType>STRING</dataType>
+                  <metaDataModelPropertiesManager>
+                    <properties/>
+                  </metaDataModelPropertiesManager>
+                </model>
+                <accessType>READ_WRITE</accessType>
+                <metaDataFieldPropertyManager>
+                  <properties>
+                    <org.mule.common.metadata.property.QNameMetaDataProperty>
+                      <name>
+                        <namespaceURI></namespaceURI>
+                        <localPart>name</localPart>
+                        <prefix></prefix>
+                      </name>
+                    </org.mule.common.metadata.property.QNameMetaDataProperty>
+                  </properties>
+                </metaDataFieldPropertyManager>
+              </org.mule.common.metadata.DefaultMetaDataField>
+              <org.mule.common.metadata.DefaultMetaDataField>
+                <name>price</name>
+                <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+                  <dataType>STRING</dataType>
+                  <metaDataModelPropertiesManager>
+                    <properties/>
+                  </metaDataModelPropertiesManager>
+                </model>
+                <accessType>READ_WRITE</accessType>
+                <metaDataFieldPropertyManager>
+                  <properties>
+                    <org.mule.common.metadata.property.QNameMetaDataProperty>
+                      <name>
+                        <namespaceURI></namespaceURI>
+                        <localPart>price</localPart>
+                        <prefix></prefix>
+                      </name>
+                    </org.mule.common.metadata.property.QNameMetaDataProperty>
+                  </properties>
+                </metaDataFieldPropertyManager>
+              </org.mule.common.metadata.DefaultMetaDataField>
+              <org.mule.common.metadata.DefaultMetaDataField>
+                <name>description</name>
+                <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+                  <dataType>STRING</dataType>
+                  <metaDataModelPropertiesManager>
+                    <properties/>
+                  </metaDataModelPropertiesManager>
+                </model>
+                <accessType>READ_WRITE</accessType>
+                <metaDataFieldPropertyManager>
+                  <properties>
+                    <org.mule.common.metadata.property.QNameMetaDataProperty>
+                      <name>
+                        <namespaceURI></namespaceURI>
+                        <localPart>description</localPart>
+                        <prefix></prefix>
+                      </name>
+                    </org.mule.common.metadata.property.QNameMetaDataProperty>
+                  </properties>
+                </metaDataFieldPropertyManager>
+              </org.mule.common.metadata.DefaultMetaDataField>
+              <org.mule.common.metadata.DefaultMetaDataField>
+                <name>calories</name>
+                <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+                  <dataType>INTEGER</dataType>
+                  <metaDataModelPropertiesManager>
+                    <properties/>
+                  </metaDataModelPropertiesManager>
+                </model>
+                <accessType>READ_WRITE</accessType>
+                <metaDataFieldPropertyManager>
+                  <properties>
+                    <org.mule.common.metadata.property.QNameMetaDataProperty>
+                      <name>
+                        <namespaceURI></namespaceURI>
+                        <localPart>calories</localPart>
+                        <prefix></prefix>
+                      </name>
+                    </org.mule.common.metadata.property.QNameMetaDataProperty>
+                  </properties>
+                </metaDataFieldPropertyManager>
+              </org.mule.common.metadata.DefaultMetaDataField>
+            </fields>
+            <rootElement>
+              <namespaceURI></namespaceURI>
+              <localPart>breakfast_menu</localPart>
+              <prefix></prefix>
+            </rootElement>
+            <schemas class="org.mule.common.metadata.StringBasedSchemaProvider">
+              <schemas>
+                <string>&lt;xs:schema attributeFormDefault=&quot;unqualified&quot; elementFormDefault=&quot;qualified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+  &lt;xs:element name=&quot;breakfast_menu&quot; type=&quot;breakfast_menuType&quot;/&gt;
+  &lt;xs:complexType name=&quot;foodType&quot;&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name=&quot;name&quot;&gt;
+        &lt;xs:simpleType&gt;
+          &lt;xs:restriction base=&quot;xs:string&quot;&gt;
+            &lt;xs:enumeration value=&quot;Belgian Waffles&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Strawberry Belgian Waffles&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Berry-Berry Belgian Waffles&quot;/&gt;
+            &lt;xs:enumeration value=&quot;French Toast&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Homestyle Breakfast&quot;/&gt;
+          &lt;/xs:restriction&gt;
+        &lt;/xs:simpleType&gt;
+      &lt;/xs:element&gt;
+      &lt;xs:element name=&quot;price&quot;&gt;
+        &lt;xs:simpleType&gt;
+          &lt;xs:restriction base=&quot;xs:string&quot;&gt;
+            &lt;xs:enumeration value=&quot;$5.95&quot;/&gt;
+            &lt;xs:enumeration value=&quot;$7.95&quot;/&gt;
+            &lt;xs:enumeration value=&quot;$8.95&quot;/&gt;
+            &lt;xs:enumeration value=&quot;$4.50&quot;/&gt;
+            &lt;xs:enumeration value=&quot;$6.95&quot;/&gt;
+          &lt;/xs:restriction&gt;
+        &lt;/xs:simpleType&gt;
+      &lt;/xs:element&gt;
+      &lt;xs:element name=&quot;description&quot;&gt;
+        &lt;xs:simpleType&gt;
+          &lt;xs:restriction base=&quot;xs:string&quot;&gt;
+            &lt;xs:enumeration value=&quot;Two of our famous Belgian Waffles with plenty of real maple syrup&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Light Belgian waffles covered with strawberries and whipped cream&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Light Belgian waffles covered with an assortment of fresh berries and whipped cream&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Thick slices made from our homemade sourdough bread&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Two eggs, bacon or sausage, toast, and our ever-popular hash browns&quot;/&gt;
+          &lt;/xs:restriction&gt;
+        &lt;/xs:simpleType&gt;
+      &lt;/xs:element&gt;
+      &lt;xs:element name=&quot;calories&quot;&gt;
+        &lt;xs:simpleType&gt;
+          &lt;xs:restriction base=&quot;xs:short&quot;&gt;
+            &lt;xs:enumeration value=&quot;650&quot;/&gt;
+            &lt;xs:enumeration value=&quot;900&quot;/&gt;
+            &lt;xs:enumeration value=&quot;600&quot;/&gt;
+            &lt;xs:enumeration value=&quot;950&quot;/&gt;
+          &lt;/xs:restriction&gt;
+        &lt;/xs:simpleType&gt;
+      &lt;/xs:element&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:complexType name=&quot;breakfast_menuType&quot;&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element type=&quot;foodType&quot; name=&quot;food&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:schema&gt;</string>
+              </schemas>
+              <encoding>UTF-8</encoding>
+            </schemas>
+            <namespaceManager>
+              <namespacePrefix/>
+            </namespaceManager>
+          </model>
+          <isArray>false</isArray>
+        </model>
+        <accessType>READ_WRITE</accessType>
+        <metaDataFieldPropertyManager>
+          <properties>
+            <org.mule.common.metadata.property.QNameMetaDataProperty>
+              <name>
+                <namespaceURI></namespaceURI>
+                <localPart>food</localPart>
+                <prefix></prefix>
+              </name>
+            </org.mule.common.metadata.property.QNameMetaDataProperty>
+          </properties>
+        </metaDataFieldPropertyManager>
+      </org.mule.common.metadata.DefaultMetaDataField>
+    </fields>
+    <rootElement reference="../fields/org.mule.common.metadata.DefaultMetaDataField/model/model/rootElement"/>
+    <schemas class="org.mule.common.metadata.StringBasedSchemaProvider">
+      <schemas reference="../../fields/org.mule.common.metadata.DefaultMetaDataField/model/model/schemas/schemas"/>
+      <encoding reference="../../fields/org.mule.common.metadata.DefaultMetaDataField/model/model/schemas/encoding"/>
+    </schemas>
+    <namespaceManager reference="../fields/org.mule.common.metadata.DefaultMetaDataField/model/model/namespaceManager"/>
+  </metadataModel>
+</custom__type__definition>

@@ -1,0 +1,36 @@
+[ 
+  {"id": "df1cee36-94f0-4ec4-bbcd-5d4152dec952",
+   "type": "FURNITURE",
+   "status": "OPERATIONAL",
+   "description": "Desk",
+   "manufacturer": "Poliform",
+   "owner": "jsmith",
+   "location": 12345,
+   "creationDate": "2016-08-01T00:00:00z",
+   "effectiveStartOperationDate": "2016-08-05T00:00:00z",
+   "plannedRetirementDate": "2020-08-05T00:00:00z"
+  },
+  {"id": "6756d4b4-a078-495a-9a8f-e6e37d7a29b4",
+   "type": "FURNITURE",
+   "status": "OPERATIONAL",
+   "description": "Chair",
+   "manufacturer": "Poliform",
+   "owner": "jsmith",
+   "location": 12345,
+   "creationDate": "2016-08-01T00:00:00z",
+   "effectiveStartOperationDate": "2016-08-05T00:00:00z",
+   "plannedRetirementDate": "2020-08-05T00:00:00z"
+  },
+    {"id": "350f3740-0cc3-4860-b73d-b5da454b2310",
+   "type": "IT-EQUIPMENT",
+   "status": "OPERATIONAL",
+   "description": "Mac Mini",
+   "manufacturer": "Apple",
+   "serilaNumber": "AB1354544",  
+   "owner": "mharmon",
+   "location": 12345,
+   "creationDate": "2016-08-01T00:00:00z",
+   "effectiveStartOperationDate": "2016-08-05T00:00:00z",
+   "plannedRetirementDate": "2020-08-05T00:00:00z"
+  }
+]
